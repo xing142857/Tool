@@ -45,13 +45,13 @@ function App() {
       <div className='flex items-center justify-center h-24'></div>
       <div className='flex items-center justify-center text-3xl md:text-4xl lg:text-5xl xl:text-6xl gap-x-8'>
         <button onClick={startRunning}>
-          Start
+          <p className='font-bold'>Start</p>
         </button>
         <button onClick={()=>setIsRunning(false)}>
-          Stop
+          <p className='font-bold'>Stop</p>
         </button>
         <button onClick={startReversing}>
-          Reverse
+          <p className='font-bold'>Reverse</p>
         </button>
       </div>
     </div>
