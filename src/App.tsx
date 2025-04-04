@@ -7,30 +7,50 @@ function App() {
   const [isRervesing, setIsReversing] = useState(false);
 
   const startRunning = () => {
-    
+    setIsRunning(true);
+    setIsReversing(false);
+  }
+
+  const startReversing = () => {
+    setIsRunning(true);
+    setIsReversing(true);
+  }
+
+  const translateClock = (n: number) => {
+    let output = "";
+    if (n < 0) {
+      n = Math.abs(n)
+      output += "-"
+    }
+    output += (Math.floor(n / 3600) < 10 ? "0" : "") + Math.floor(n / 3600);
+    output += ":";
+    output += (Math.floor(n / 60 % 60) < 10 ? "0" : "") + Math.floor(n / 60 % 60);
+    output += ":";
+    output += (n % 60 < 10 ? "0" : "") + (n % 60);
+    return output
   }
 
   useEffect(() => {
     const interval = setInterval(() => {
-      isRunning ? setCount((prev) => prev + 1) : null;
+      isRunning ? isRervesing ? setCount(prev => prev - 1) : setCount(prev => prev + 1) : null;
     }, 1000);
     return () => clearInterval(interval);
-  }, [isRunning]);
+  }, [isRunning, isRervesing]);
 
   return (
-    <div className="grid w-screen h-screen content-center">
-      <p className="flex items-center justify-center text-6xl md:text-7xl lg:text-8xl xl:text-9xl font-mono">
-        00:00:00{count}
+    <div className="grid w-screen h-screen content-center font-mono">
+      <p className="flex items-center justify-center text-6xl md:text-7xl lg:text-8xl xl:text-9xl">
+        {translateClock(count)}
       </p>
       <div className='flex items-center justify-center h-24'></div>
       <div className='flex items-center justify-center text-3xl md:text-4xl lg:text-5xl xl:text-6xl gap-x-8'>
-        <button onClick={()=>setIsRunning(true)}>
+        <button onClick={startRunning}>
           Start
         </button>
         <button onClick={()=>setIsRunning(false)}>
           Stop
         </button>
-        <button onClick={()=>setIsReversing(true)}>
+        <button onClick={startReversing}>
           Reverse
         </button>
       </div>
